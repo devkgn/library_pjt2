@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc 
+	https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans 
+		https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context 
+		https://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- @Controller가 명시된 클래스를 컨트롤러 객체로 이용할 수 있도록 설정 -->
+	<!-- annotation-driven이 없다면 컨트롤러에 사용되는 모든 클래스를 bean 태그를 통해 생성해야함 -->
+	<annotation-driven />
+
+	<!-- 웹 애플리케이션 개발에 필요한 다양한 파일에 접근 가능하도록 해줌  -->
+	<!-- 정적인 파일이 모여있는 경로를 지정하여 서블렛이 불필요하게 접근하지 않도록 차단 -->
+	<resources mapping="/resources/**" location="/resources/" />
+
+	<!-- ViewResolver가 반환받은 ModelAndView 객체를 통해서 View파일(JSP)를 찾기 위한 기본 위치 설정 -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+	
+	<context:component-scan base-package="com.goodee.library" />
+	
+</beans:beans>
