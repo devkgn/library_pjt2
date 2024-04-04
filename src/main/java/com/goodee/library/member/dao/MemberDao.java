@@ -2,6 +2,8 @@ package com.goodee.library.member.dao;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.logging.log4j.LogManager;
@@ -69,6 +71,9 @@ public class MemberDao {
 			loginedDto 
 				= sqlSession.selectOne(namespace+"selectMemberOne",dto.getM_id());
 			if(loginedDto != null) {
+				
+				// 로그인 전 m_flag 확인
+				
 				// 비밀번호 일치여부 확인
 				if(passwordEncoder.matches(dto.getM_pw(), loginedDto.getM_pw())== false) {
 					loginedDto = null;
@@ -78,5 +83,27 @@ public class MemberDao {
 			e.printStackTrace();
 		}
 		return loginedDto;
+	}
+	
+	public List<MemberDto> selectMemberAll(){
+		LOGGER.info("회원 목록 정보 전체 조회");
+		List<MemberDto> resultList = new ArrayList<MemberDto>();
+		try {
+			resultList = sqlSession.selectList(namespace+"selectMeberAll");
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return resultList;
+		
+	}
+	
+	public int deleteMember(long m_no) {
+		int result = 0;
+		try {
+			result = sqlSession.update(namespace+"deleteMember",m_no);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 }

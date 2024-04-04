@@ -51,3 +51,39 @@ const valiCheckJoin = function(form){
 	
 	return result;
 }
+
+
+
+/* 수정시 유효성 검사 */
+const valiCheckEdit = function(form){
+	let result = false;
+	let text = "";
+	
+	const mName = form.m_name.value;
+	const name_reg_exp = /^[가-힣]{2,4}$/;
+	
+	const mMail = form.m_mail.value;
+	const mail_reg_exp =  /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+	
+	if(mName.length == 0){
+		text += "이름을 입력하세요.";
+	} else if(name_reg_exp.test(mName) == false){
+		text += "이름은 한글 2~4자 이내로 입력하세요.";
+	} else if(mMail.length == 0){
+		text += "이메일을 입력하세요.";
+	} else if(mail_reg_exp.test(mMail) == false){
+		text += "이메일 형식을 지켜서 작성해주세요.";
+	} else{
+		result = true;
+	}
+	
+	if(result == false){
+		Swal.fire({
+		  icon: 'error',
+		  title: 'Error' ,
+		  text: text,
+		});
+	}
+	
+	return result;
+}

@@ -10,7 +10,7 @@
 			<!-- NAV -->
 			<ul class="main-nav nav navbar-nav">
 				<li><a href="#">Home</a></li>
-				<li><a href="#">Member</a></li>
+				<li><a href="/member">Member</a></li>
 				<li><a href="#">Book</a></li>
 			</ul>
 			<!-- /NAV -->
