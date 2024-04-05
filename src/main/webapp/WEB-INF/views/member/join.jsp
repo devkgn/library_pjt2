@@ -73,6 +73,7 @@
 			// fetch 비동기 통신으로 회원 정보 insert
 			fetch('/join',{
 				method: 'post',
+				// 파일이 없을때만 적는다.
 				headers : {
 					"Content-Type": "application/json;charset=utf-8",
 					"Accept": "application/json"

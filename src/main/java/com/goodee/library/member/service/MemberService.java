@@ -59,12 +59,20 @@ public class MemberService {
 		MemberDto loginedMember = dao.selectMemberOne(dto);
 		
 		if(loginedMember != null) {
-			// 로그인 성공 시점
-			session.setAttribute("loginedMember", loginedMember);
-			session.setMaxInactiveInterval(60*30);
 			
-			map.put("res_code", "200");
-			map.put("res_msg", loginedMember.getM_name()+"님, 환영합니다.");
+			if("Y".equals(loginedMember.getM_flag())) {
+				
+				// 로그인 성공 시점
+				session.setAttribute("loginedMember", loginedMember);
+				session.setMaxInactiveInterval(60*30);
+				
+				map.put("res_code", "200");
+				map.put("res_msg", loginedMember.getM_name()+"님, 환영합니다.");
+			} else {
+				map.put("res_code", "409");
+				map.put("res_msg", "탈퇴한 사용자 입니다.");
+			}
+			
 		}
 		return map;
 	}
@@ -87,24 +95,40 @@ public class MemberService {
 	// 3. session 셋팅 다시
 	// -> m_no 기준으로 회원정보 조회 MemberDto
 	// -> loginMember 메소드 참고
-	
-	
-	public Map<String,String> deleteMember(long m_no){
-		LOGGER.info("회원 정보 삭제 처리");
+	public Map<String,String> updateMember(MemberDto dto,
+			HttpSession session){
+		LOGGER.info("회원 정보 수정 요청");
 		Map<String,String> map = new HashMap<String,String>();
 		map.put("res_code", "404");
-		map.put("res_msg", "회원 정보 삭제중 오류가 발생하였습니다.");
-		try {
-			if(dao.deleteMember(m_no) > 0) {
-				map.put("res_code", "200");
-				map.put("res_msg", "회원 정보가 삭제되었습니다.");
-			}
-		}catch(Exception e) {
-			e.printStackTrace();
+		map.put("res_msg", "회원 정보 수정중 오류가 발생하였습니다.");
+		if(dao.updateMember(dto) > 0) {
+			map.put("res_code", "200");
+			map.put("res_msg", "회원 정보가 수정되었습니다.");
+			// m_no기준 회원정보 조회
+			MemberDto updatedMemberDto 
+				= dao.selectMemberByNo(dto.getM_no());
+			session.setAttribute("loginedMember", updatedMemberDto);
+			session.setMaxInactiveInterval(60*30);
 		}
 		return map;
 	}
 	
+	
+	// 1. deleteMember 메소드 구성
+	// 2. return Map -> 초기값 설정 후 결과에 따라서 변화
+	// 3. dao에게 회원 정보 업데이트 요청
+	// 4. tbl_member m_flag 컬럼 생성(기본값 Y, 탈퇴 요청시 N)
+	public Map<String,String> deleteMember(long m_no, HttpSession session){
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("res_code", "404");
+		map.put("res_msg", "회원 탈퇴 중 오류가 발생했습니다.");
+		if(dao.deleteMember(m_no) > 0) {
+			map.put("res_code", "200");
+			map.put("res_msg", "정상적으로 회원 탈퇴되었습니다.");
+			session.invalidate();
+		}
+		return map;
+	}
 	
 	
 }

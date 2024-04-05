@@ -33,7 +33,11 @@
 					<c:otherwise>
 						<li><a href="/member/${loginedMember.m_no}"><i class="fa fa-user-o"></i>Edit</a></li>
 						<li><a href="/logout"><i class="fa fa-sign-out"></i>Logout</a></li>
-						<li><a href="javascript:deleteMember(${loginedMember.m_no});"><i class="fa fa-trash"></i>Delete</a></li>
+						<li>
+							<a href="javascript:deleteMember(${loginedMember.m_no});">
+								<i class="fa fa-trash"></i>Delete
+							</a>
+						</li>
 					</c:otherwise>
 				</c:choose>
 			</ul>
@@ -84,7 +88,7 @@
 				  title: '성공' ,
 				  text: data.res_msg
 				}).then((result)=>{
-					location.href='/book';
+					location.href='/';
 				});
 			} else{
 				Swal.fire({

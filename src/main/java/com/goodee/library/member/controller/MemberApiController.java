@@ -1,6 +1,5 @@
 package com.goodee.library.member.controller;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -58,26 +57,16 @@ public class MemberApiController {
 	public Map<String,String> memberEdit(
 			@RequestBody MemberDto dto, HttpSession session){
 		LOGGER.info("회원 정보 수정 기능");
-		Map<String,String> map = new HashMap<String,String>();
-		map.put("res_code", "404");
-		map.put("res_msg", "테스트");
-//		return service.updateMember(dto,session);
-		return map;
+		return service.updateMember(dto,session);
 	}
 	
 	@ResponseBody
 	@DeleteMapping("/member/{m_no}")
-	public Map<String,String> deleteMember(
-			@PathVariable("m_no") long m_no){
+	public Map<String,String> deleteMember(@PathVariable("m_no") long m_no,
+			HttpSession session){
 		LOGGER.info("회원 정보 삭제");
-		return service.deleteMember(m_no);
+		return service.deleteMember(m_no,session);
 	}
-	
-	
-	
-	
-	
-	
 	
 
 }

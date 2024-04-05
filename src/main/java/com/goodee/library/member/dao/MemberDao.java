@@ -71,13 +71,12 @@ public class MemberDao {
 			loginedDto 
 				= sqlSession.selectOne(namespace+"selectMemberOne",dto.getM_id());
 			if(loginedDto != null) {
-				
-				// 로그인 전 m_flag 확인
-				
+
 				// 비밀번호 일치여부 확인
 				if(passwordEncoder.matches(dto.getM_pw(), loginedDto.getM_pw())== false) {
 					loginedDto = null;
 				}
+				 
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -94,8 +93,36 @@ public class MemberDao {
 			e.printStackTrace();
 		}
 		return resultList;
-		
 	}
+	
+	public int updateMember(MemberDto dto) {
+		LOGGER.info("회원 정보 수정");
+		int result = 0;
+		try {
+			result = sqlSession.update(namespace+"updateMember",dto);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public MemberDto selectMemberByNo(long m_no) {
+		LOGGER.info("pk를 기준으로 회원 1명 조회");
+		MemberDto dto = new MemberDto();
+		try {
+			dto = sqlSession.selectOne(namespace+"selectMemberByNo",m_no);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	public int deleteMember(long m_no) {
 		int result = 0;
