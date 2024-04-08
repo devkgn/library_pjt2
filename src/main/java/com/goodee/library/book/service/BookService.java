@@ -35,10 +35,10 @@ public class BookService {
 		return map;	
 	}
 	
-	public int selectBookCount() {
+	public int selectBookCount(String b_name) {
 		LOGGER.info("전체 도서 개수 조회 요청");
 		int result = 0; 
-		result = bookDao.selectBookCount();
+		result = bookDao.selectBookCount(b_name);
 		return result;
 	}
 	

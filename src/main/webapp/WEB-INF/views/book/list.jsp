@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,26 +18,17 @@
 			<div class="container">
 				<!-- row -->
 				<div class="row">
-
 					<!-- STORE -->
 					<div id="store" class="col-md-12">
 						<!-- store top filter -->
 						<div class="store-filter clearfix">
 							<div class="store-sort">
 								<label>
-									Sort By :
-									<select class="input-select">
-										<option value="0">Latest</option>
-										<option value="1">Name</option>
-									</select>
+									Sort By : Latest
 								</label>
 
 								<label>
-									Show :
-									<select class="input-select">
-										<option value="0">8</option>
-										<option value="1">20</option>
-									</select>
+									Show : 8
 								</label>
 							</div>
 							<div class="store-grid">
@@ -48,45 +39,38 @@
 
 						<!-- store products -->
 						<div class="row">
-							<!-- product -->
-							<div class="col-md-3 col-xs-6">
-								<div class="product">
-									<div class="product-img">
-										<img src="<c:url value='/resources/img/book01.jpg'/>" alt="">
-										<div class="product-label">
-											<span class="sale">HOT</span>
-											<span class="new">NEW</span>
+							<c:forEach var="item" items="${resultList}">
+								<div class="col-md-3 col-xs-6">
+									<div class="product">
+										<div class="product-img">
+											<img src="<c:url value="/libraryUploadImg/${item.b_thumbnail}"/>">
 										</div>
-									</div>
-									<div class="product-body">
-										<p class="product-category">HISTORY</p>
-										<h3 class="product-name"><a href="#">책이름</a></h3>
-										<div class="product-rating">
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
+										<div class="product-body">
+											<p class="product-category">${item.b_writer}</p>
+											<h3 class="product-name"><a href="#">${item.b_name}</a></h3>
 										</div>
-									</div>
-									<div class="add-to-cart">
-										<button class="add-to-cart-btn"><i class="fa fa-file-text"></i>Details</button>
+										<div class="add-to-cart">
+											<button class="add-to-cart-btn"><i class="fa fa-file-text"></i>Details</button>
+										</div>
 									</div>
 								</div>
-							</div>
-							<!-- /product -->
-
+							</c:forEach>
 						</div>
 						<!-- /store products -->
 
 						<!-- store bottom filter -->
 						<div class="store-filter clearfix">
 							<ul class="store-pagination">
-								<li class="active">1</li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#">4</a></li>
-								<li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+								<c:if test="${paging.prev}">
+									<li><a href="/book?nowPage=${paging.pageBarStart-1}"><i class="fa fa-angle-left"></i></a></li>
+								</c:if>
+								<c:forEach begin="${paging.pageBarStart}" end="${paging.pageBarEnd}" var="idx">
+									<li><a href="/book?nowPage=${idx}" <c:out value="${paging.nowPage == idx ? 'class=active' : '' }"/>>${idx}</a></li>
+								</c:forEach>
+								<c:if test="${paging.next}">
+									<li><a href="/book?nowPage=${paging.pageBarEnd+1}"><i class="fa fa-angle-right"></i></a></li>
+								</c:if>
+								
 							</ul>
 						</div>
 						<!-- /store bottom filter -->

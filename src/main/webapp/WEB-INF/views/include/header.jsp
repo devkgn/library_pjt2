@@ -54,13 +54,11 @@
 				<!-- SEARCH BAR -->
 				<div class="col-md-6">
 					<div class="header-search">
-						<form>
+						<form name="searchFrm" method="get" action="/book" >
 							<select class="input-select">
-								<option value="0">All Categories</option>
-								<option value="1">Member</option>
-								<option value="1">Book</option>
+								<option value="0">Book</option>
 							</select>
-							<input class="input" placeholder="Search here">
+							<input class="input" name="b_name" placeholder="Search here">
 							<button class="search-btn">Search</button>
 						</form>
 					</div>

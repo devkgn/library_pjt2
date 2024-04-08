@@ -34,4 +34,7 @@
 		</interceptor>
 	</interceptors>
 	
+	<resources mapping="/libraryUploadImg/**" 
+	location="file:///C:/library/upload/"/>
+	
 </beans:beans>
