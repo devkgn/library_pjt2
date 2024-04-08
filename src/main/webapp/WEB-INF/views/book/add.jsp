@@ -76,12 +76,7 @@
 				
 			}else{
 				const payload = new FormData(form);
-				let object = {};
-				payload.forEach(function(value, key){
-				    object[key] = value;
-				});
-				const json = JSON.stringify(object); 
-				console.log(json);
+				console.log(payload);
 				fetch('/book',{
 					method: 'post',
 					body:payload
@@ -104,7 +99,6 @@
 						});
 					}				
 				})
-				
 			}
 		});
 	</script>

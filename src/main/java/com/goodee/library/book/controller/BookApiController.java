@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.goodee.library.book.dto.BookDto;
+import com.goodee.library.book.service.BookService;
 import com.goodee.library.book.util.UploadFileService;
 
 @Controller
@@ -23,6 +24,9 @@ public class BookApiController {
 	
 	@Autowired
 	UploadFileService uploadFileService;
+	
+	@Autowired
+	BookService bookService;
 	
 	// 1. Post방식
 	// 2. url은 /book
@@ -43,7 +47,7 @@ public class BookApiController {
 		String savedFileName = uploadFileService.upload(file);
 		if(savedFileName != null) {
 			map.put("res_msg", "파일 업로드는 성공했습니다.");
-			dto.setB_thumnail(savedFileName);
+			dto.setB_thumbnail(savedFileName);
 			// b_thumbnail, b_name, b_writer, b_reg_date
 			map = bookService.createBook(dto);
 		}else {

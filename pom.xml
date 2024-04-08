@@ -135,6 +135,12 @@ https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	    <artifactId>spring-security-core</artifactId>
 	    <version>${org.springframework-version}</version>
 	</dependency>
+	<!-- File upload -->
+	<dependency>
+	    <groupId>commons-fileupload</groupId>
+	    <artifactId>commons-fileupload</artifactId>
+	    <version>1.5</version>
+	</dependency>
   </dependencies>
   <build>
     <plugins>
