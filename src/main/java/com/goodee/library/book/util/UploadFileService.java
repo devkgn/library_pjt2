@@ -42,6 +42,18 @@ public class UploadFileService {
 		}else {
 			return null;
 		}
+		
+		
 	}
+	
+	public boolean delete(String b_thumbnail) {
+		
+		
+		
+		
+		
+		return true;
+	}
+	
 
 }

@@ -56,5 +56,38 @@ public class BookDao {
 		}
 		return resultList;
 	}
+	
+	public List<BookDto> selectBookListToday(){
+		List<BookDto> resultList = new ArrayList<BookDto>();
+		try {
+			resultList 
+				= sqlSession.selectList(namespace+"selectBookListToday");
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return resultList;
+	}
+	
+	public BookDto selectBookDetail(long b_no) {
+		LOGGER.info("pk기준으로 도서 정보 1개 조회");
+		BookDto dto = new BookDto();
+		try {
+			dto = sqlSession.selectOne(namespace+"selectBookDetail",b_no);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
+	}
+	
+	public int editBookDetail(BookDto dto) {
+		LOGGER.info("도서 정보 수정");
+		int result = 0;
+		try {
+			result = sqlSession.update(namespace+"updateBookDetail",dto);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 
 }

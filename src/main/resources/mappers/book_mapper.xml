@@ -29,5 +29,37 @@
 		ORDER BY b_reg_date DESC
 		LIMIT #{limit_pageNo}, #{numPerPage}
 	</select>
+	
+	<select id="selectBookListToday"
+	resultType="com.goodee.library.book.dto.BookDto">
+		SELECT * 
+		FROM tbl_book
+		<where>
+			DATE_FORMAT(b_reg_date,'%Y-%m-%d') = CURDATE()
+		</where>
+	</select>
+	
+	<select id="selectBookDetail"
+	resultType="com.goodee.library.book.dto.BookDto"
+	parameterType="long">
+		SELECT *
+		FROM tbl_book
+		<where>
+			b_no = #{b_no}
+		</where>
+	</select>
+	
+	<update id="updateBookDetail" parameterType="com.goodee.library.book.dto.BookDto">
+		UPDATE tbl_book
+		SET b_name = #{b_name}
+		,b_writer = #{b_writer}
+		,b_mod_date = NOW()
+		<if test="b_thumbnail != null and b_thumbnail.equals('') == false">
+			,b_thumbnail = #{b_thumbnail}
+		</if>
+		<where>
+			b_no = #{b_no}
+		</where>
+	</update>
 
 </mapper>

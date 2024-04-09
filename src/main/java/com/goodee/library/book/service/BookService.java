@@ -46,4 +46,26 @@ public class BookService {
 		LOGGER.info("전체 도서 정보 조회 요청");
 		return bookDao.selectBookList(dto);
 	}
+	
+	public List<BookDto> selectBookListToday(){
+		LOGGER.info("오늘 등록된 도서 전체 조회 요청");
+		return bookDao.selectBookListToday();
+	}
+	
+	public BookDto selectBookDetail(long b_no) {
+		LOGGER.info("pk를 기준으로 도서 1개 정보 조회 요청");
+		return bookDao.selectBookDetail(b_no);
+	}
+	
+	public Map<String,String> editBookDetail(BookDto dto){
+		LOGGER.info("도서 정보 수정 요청");
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("res_code", "404");
+		map.put("res_msg", "도서 정보 수정 중 오류가 발생했습니다.");
+		if(bookDao.editBookDetail(dto) > 0) {
+			map.put("res_code", "200");
+			map.put("res_msg", "정상적으로 도서 정보가 수정되었습니다.");
+		}
+		return map;
+	}
 }
