@@ -29,8 +29,9 @@
                   <!-- SignUp Form -->
                   <div class="billing-details">
                      <div class="section-title">
-                        <h3 class="title">Book Edit</h3>
-                     </div>
+						<h3 class="title">Book Edit</h3>
+						<a class="review-link" id="delete_btn" href="#" onclick="return false;">&nbsp;delete</a>
+					</div>
                      <form id="bookEditFrm" name="edit_book_form">
                         <input type="hidden" name="b_no" value="${bookDto.b_no}">
                         <input type="hidden" name="b_thumbnail" value="${bookDto.b_thumbnail}">
@@ -58,6 +59,31 @@
 <jsp:include page="../include/footer.jsp"/>
 <script>
 	const form = document.getElementById("bookEditFrm");
+	const deleteBtn = document.getElementById("delete_btn");
+	deleteBtn.addEventListener('click',(e)=>{
+		const bNo = form.b_no.value;
+		fetch('/book/'+bNo,{
+			method:'delete'
+		})
+		.then(response => response.json())
+		.then(data =>{
+			if(data.res_code == '200'){
+				Swal.fire({
+				  icon: 'success',
+				  title: '성공' ,
+				  text: data.res_msg
+				}).then((result)=>{
+					location.href='/book';
+				});
+			} else{
+				Swal.fire({
+				  icon: 'error',
+				  title: '실패' ,
+				  text: data.res_msg
+				});
+			}
+		})
+	});
 	form.addEventListener('submit', (e)=>{
 		e.preventDefault();
 		let vali_check = false;

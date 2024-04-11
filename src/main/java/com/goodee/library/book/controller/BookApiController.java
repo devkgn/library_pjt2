@@ -85,8 +85,16 @@ public class BookApiController {
 		map = bookService.editBookDetail(dto);
 		// b_thumbnail 여부에 따라 쿼리가 달라짐.
 		return map;
-		
 	}
 	
+	// 도서 정보 삭제  
+	// 1. 데이터베이스에서 삭제
+	// 2. 1번 정상 수행시 -> 파일도 서버에서 삭제
+	// 3. 코드 수행 결과를 프론트에게 전달
+	
+	
+	
+	
+	 
 
 }
